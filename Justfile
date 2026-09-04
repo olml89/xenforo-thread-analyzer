@@ -38,6 +38,9 @@ pint *ARGS:
 phpstan:
     docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/phpstan --ansi
 
+phpunit:
+    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/phpunit tests
+
 rector *ARGS:
     docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/rector --ansi {{ARGS}}
 

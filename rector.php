@@ -15,6 +15,7 @@ return RectorConfig::configure()
     )
     ->withPaths([
         __DIR__ . '/src',
+        __DIR__ . '/tests',
     ])
     ->withPHPStanConfigs([
         __DIR__ . '/phpstan.neon',

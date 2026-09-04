@@ -1,8 +1,9 @@
 #!/bin/sh
 set -eu
 
-just phpstan
 just pint --test
 just rector --dry-run
+just phpstan
+just phpunit
 
 echo "✅ All commit validation checks have passed. Proceeding with the commit."
