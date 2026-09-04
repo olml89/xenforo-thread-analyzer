@@ -33,10 +33,13 @@ sh:
 # ============================================================================
 
 pint *ARGS:
-    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/pint {{ARGS}} --ansi
+    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/pint --ansi {{ARGS}}
 
 phpstan:
     docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/phpstan --ansi
+
+rector *ARGS:
+    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/rector --ansi {{ARGS}}
 
 # ============================================================================
 # APPLICATION EXECUTION
