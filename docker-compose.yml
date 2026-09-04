@@ -12,5 +12,7 @@ services:
     environment:
       PHP_IDE_CONFIG: "serverName=${PHP_SERVER_NAME}"
     tty: true
+    # Copy the pre-commit hook
+    command: sh -c 'cp /app/git/hooks/pre-commit /app/.git/hooks/pre-commit && sh'
     volumes:
       - ./:/app

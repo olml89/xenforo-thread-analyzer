@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+
+just phpstan
+
+echo "✅ All commit validation checks have passed. Proceeding with the commit."

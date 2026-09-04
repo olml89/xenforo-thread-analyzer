@@ -1,6 +1,14 @@
 set dotenv-load
 
+# ============================================================================
+# ENVIRONMENT
+# ============================================================================
+
 DOCKER_COMPOSE := '-f docker-compose.yml'
+
+# ============================================================================
+# CONTAINER LIFECYCLE
+# ============================================================================
 
 build:
     docker compose {{DOCKER_COMPOSE}} build --no-cache
@@ -19,6 +27,17 @@ down:
 
 sh:
     docker compose {{DOCKER_COMPOSE}} exec xenforo-thread-analyzer /bin/sh
+
+# ============================================================================
+# CODE QUALITY
+# ============================================================================
+
+phpstan:
+    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/phpstan
+
+# ============================================================================
+# APPLICATION EXECUTION
+# ============================================================================
 
 analyze *ARGS:
     docker compose {{DOCKER_COMPOSE}} exec xenforo-thread-analyzer /app/analyze {{ARGS}}
