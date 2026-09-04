@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use olml89\XenforoThreadAnalyzer\Greeter;
+
+require __DIR__ . '/vendor/autoload.php';
+
+$target = $argv[1] ?? 'World';
+$greeter = new Greeter();
+
+echo $greeter->greet($target);
