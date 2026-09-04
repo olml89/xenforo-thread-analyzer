@@ -32,8 +32,11 @@ sh:
 # CODE QUALITY
 # ============================================================================
 
+pint *ARGS:
+    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/pint {{ARGS}} --ansi
+
 phpstan:
-    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/phpstan
+    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/phpstan --ansi
 
 # ============================================================================
 # APPLICATION EXECUTION

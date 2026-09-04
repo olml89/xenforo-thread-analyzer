@@ -2,5 +2,6 @@
 set -eu
 
 just phpstan
+just pint --test
 
 echo "✅ All commit validation checks have passed. Proceeding with the commit."
