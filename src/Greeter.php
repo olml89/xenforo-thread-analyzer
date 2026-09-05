@@ -8,7 +8,7 @@ final readonly class Greeter
 {
     private const string TARGET = 'World';
 
-    public function greet(?string $target): string
+    public function greet(?string $target = null): string
     {
         return sprintf('Hello, %s!', $target ?? self::TARGET) . PHP_EOL;
     }
