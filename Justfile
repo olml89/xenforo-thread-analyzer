@@ -6,6 +6,12 @@ set dotenv-load
 
 DOCKER_COMPOSE := '-f docker-compose.yml'
 
+XDEBUG := if env_var_or_default("XDEBUG_TRIGGER", "") == "1" {
+    "-e XDEBUG_TRIGGER=1"
+} else {
+    ""
+}
+
 # ============================================================================
 # CONTAINER LIFECYCLE
 # ============================================================================
@@ -25,28 +31,31 @@ stop:
 down:
 	docker compose {{DOCKER_COMPOSE}} down
 
-sh:
-    docker compose {{DOCKER_COMPOSE}} exec xenforo-thread-analyzer /bin/sh
+# ============================================================================
+# COMMAND EXECUTION
+# ============================================================================
+
+debug *ARGS:
+    XDEBUG_TRIGGER=1 just {{ARGS}}
+
+sh *ARGS:
+    docker compose {{DOCKER_COMPOSE}} exec {{XDEBUG}} xenforo-thread-analyzer /bin/sh
+
+analyze *ARGS:
+    docker compose {{DOCKER_COMPOSE}} exec -T {{XDEBUG}} xenforo-thread-analyzer /app/analyze {{ARGS}}
 
 # ============================================================================
 # CODE QUALITY
 # ============================================================================
 
 pint *ARGS:
-    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/pint --ansi {{ARGS}}
+    docker compose {{DOCKER_COMPOSE}} exec -T {{XDEBUG}} xenforo-thread-analyzer /app/vendor/bin/pint --ansi {{ARGS}}
 
 phpstan:
-    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/phpstan --ansi
+    docker compose {{DOCKER_COMPOSE}} exec -T {{XDEBUG}} xenforo-thread-analyzer /app/vendor/bin/phpstan --ansi
 
 phpunit:
-    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/phpunit tests
+    docker compose {{DOCKER_COMPOSE}} exec -T {{XDEBUG}} xenforo-thread-analyzer /app/vendor/bin/phpunit tests
 
 rector *ARGS:
-    docker compose {{DOCKER_COMPOSE}} exec -T xenforo-thread-analyzer /app/vendor/bin/rector --ansi {{ARGS}}
-
-# ============================================================================
-# APPLICATION EXECUTION
-# ============================================================================
-
-analyze *ARGS:
-    docker compose {{DOCKER_COMPOSE}} exec xenforo-thread-analyzer /app/analyze {{ARGS}}
+    docker compose {{DOCKER_COMPOSE}} exec -T {{XDEBUG}} xenforo-thread-analyzer /app/vendor/bin/rector --ansi {{ARGS}}
